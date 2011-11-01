@@ -87,8 +87,15 @@ def import_google(authsub_token, user):
     """
     
     contacts_service = gdata.contacts.service.ContactsService()
-    contacts_service.auth_token = authsub_token
+    ###############################################################
+    #Fix based on http://groups.google.com/group/pinax-users/browse_thread/thread/1ae61383a205f100/989ea65946bd24d0
+    #This is the original line
+    #contacts_service.auth_token = authsub_token
+    #This is the fix
+    contacts_service.SetAuthSubToken(authsub_token)
+    #End of Fix#####################################################
     contacts_service.UpgradeToSessionToken()
+
     entries = []
     feed = contacts_service.GetContactsFeed()
     entries.extend(feed.entry)
