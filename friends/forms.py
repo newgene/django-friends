@@ -44,7 +44,8 @@ if EmailAddress:
 
 class InviteFriendForm(UserForm):
     
-    to_user = forms.CharField(widget=forms.HiddenInput)
+    #to_user = forms.CharField(widget=forms.HiddenInput)
+    to_user = forms.CharField()
     message = forms.CharField(label="Message", required=False, widget=forms.Textarea(attrs = {'cols': '20', 'rows': '5'}))
     
     def clean_to_user(self):
@@ -75,5 +76,5 @@ class InviteFriendForm(UserForm):
         if notification:
             notification.send([to_user], "friends_invite", {"invitation": invitation})
             notification.send([self.user], "friends_invite_sent", {"invitation": invitation})
-        self.user.message_set.create(message="Friendship requested with %s" % to_user.username) # @@@ make link like notification
+        #self.user.message_set.create(message="Friendship requested with %s" % to_user.username) # @@@ make link like notification
         return invitation
